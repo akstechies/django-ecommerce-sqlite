@@ -13,7 +13,7 @@ Create Project and App
     - cd ecommerce_project
         - python manage.py startapp authentication
         - python manage.py startapp products
-        - python manage.py startapp cart
+        - python manage.py startapp user_cart
 
 Run server
     - python manage.py runserver
