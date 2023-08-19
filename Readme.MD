@@ -50,24 +50,29 @@ Provide step-by-step instructions for setting up the project locally. Include th
    pip install -r requirements.txt
    ```
 
-6. **Run Database Migrations:**
+6. **Navigate to the Project Folder:**
+    ```bash
+   cd ecommerce_project/
+   ```
+
+7. **Run Database Migrations:**
 
    ```bash
    python manage.py migrate
    ```
 
-7. **Create a Superuser (Admin Account):**
+8. **Create a Superuser (Admin Account):**
 
    ```bash
    python manage.py createsuperuser
    ```
 
-8. **Run the Development Server:**
+9. **Run the Development Server:**
 
    ```bash
    python manage.py runserver
    ```
 
-9. **Access the Project:**
+10. **Access the Project:**
 
    Open a web browser and go to [http://localhost:8000/](http://localhost:8000/) to access the project. You can access the admin interface at [http://localhost:8000/admin/](http://localhost:8000/admin/) using the superuser credentials.
