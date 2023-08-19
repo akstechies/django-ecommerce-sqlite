@@ -17,13 +17,13 @@ Provide step-by-step instructions for setting up the project locally. Include th
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/yourusername/your-project.git
+   git clone https://github.com/akstechies/django-ecommerce-sqlite
    ```
 
 2. **Navigate to the Project Directory:**
 
    ```bash
-   cd your-project/
+   cd django-ecommerce-sqlite/
    ```
 
 3. **Create a Virtual Environment (Optional but Recommended):**
