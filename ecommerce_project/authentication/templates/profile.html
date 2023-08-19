@@ -28,6 +28,17 @@
                     </div>
                 </div>
             </div>
+            {% empty %}
+            <div class="empty-cart">
+                <div class="container mt-5">
+                    <div class="alert alert-danger">
+                        <h4 class="alert-heading">No Cart Available</h4>
+                        <p>Sorry, it seems that there is no cart available at the moment.</p>
+                        <hr>
+                        <p class="mb-0">Kindly add products to your cart.</p>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -37,7 +48,12 @@
 {% block footer %}
 <script>
     $(document).ready(function () {
-        // Remove from Cart using Ajax
+
+        if ($('.card').length === 0) {
+            console.log("hi2")
+            $('.empty-cart').show(); 
+        }
+
         $('.remove-from-cart').on('click', function () {
             const productId = $(this).data('product-id');
             
@@ -50,9 +66,13 @@
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 success: function (data) {
-                    // Remove the item card from the DOM
                     $(this).closest('.card').remove();
                     alert('Item removed from cart!');
+
+                    if ($('.card').length === 0) {
+                        location.reload();
+                    }
+
                 }.bind(this),
                 error: function () {
                     alert('An error occurred. Please try again.');
