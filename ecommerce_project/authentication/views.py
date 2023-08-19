@@ -18,7 +18,6 @@ def register_view(request):
         form = UserCreationForm()
         form_errors = None
     return render(request, 'register.html', {'form': form, 'form_errors': form_errors})
-    # return render(request, 'register.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':

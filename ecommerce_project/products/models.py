@@ -16,8 +16,6 @@ class Tag(models.Model):
         return self.name
 
 def product_image_upload_path(instance, filename):
-    # This function will generate a unique filename for each uploaded image.
-    # It will be saved under the 'product_images' directory in your media root.
     extension = filename.split('.')[-1]
     unique_id = str(uuid.uuid4())
     return f"product_images/{unique_id}.{extension}"

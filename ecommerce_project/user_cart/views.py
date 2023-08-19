@@ -41,7 +41,6 @@ def remove_from_cart_ajax(request):
             product = Product.objects.get(pk=product_id)
             user = request.user
 
-            # Check if the product is in the cart
             try:
                 cart_item = CartItem.objects.get(product=product, user=user)
 
