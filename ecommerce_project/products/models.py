@@ -40,6 +40,3 @@ class Product(models.Model):
     def delete_old_image(self, old_image):
         if os.path.isfile(old_image):
             os.remove(old_image)
-    
-    def is_in_cart(self, user):
-        return CartItem.objects.filter(product=self, user=user).exists()
