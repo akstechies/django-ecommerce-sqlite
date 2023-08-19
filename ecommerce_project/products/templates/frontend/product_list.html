@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Product List</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 250px;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <a href="{% url 'products:view_product_detail' product.pk %}" class="btn btn-primary">Details</a>
+
+                    {% if user.is_authenticated %}
+                        <div class="quantity-control float-right">
+                            <button class="btn btn-outline-secondary minus-quantity remove-from-cart" data-product-id="{{ product.id }}">-</button>
+                            <span class="quantity" data-product-id="{{ product.id }}">
+                                {% with cart_item=product|get_cart_item:user %}
+                                    {{ cart_item.quantity|default:0 }}
+                                {% endwith %}
+                            </span>
+                            <button class="btn btn-outline-secondary plus-quantity add-to-cart" data-product-id="{{ product.id }}">+</button>
+                        </div>
+                        {% comment %} {% if not product|is_in_cart:user %}
+                            <button class="btn btn-success float-right add-to-cart" data-product-id="{{ product.id }}">Add to Cart</button>
+                        {% else %}
+                            <button class="btn btn-danger float-right remove-from-cart" data-product-id="{{ product.id }}">Remove from Cart</button>
+                        {% endif %} {% endcomment %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+    <script>
+        $(document).ready(function () {
+            // Add to Cart using Ajax
+            $('.add-to-cart').on('click', function () {
+                const productId = $(this).data('product-id');
+                const quantity = 1;
+                $.ajax({
+                    url: '{% url 'cart:add_to_cart_ajax' %}',
+                    type: 'POST',
+                    data: {
+                        product_id: productId,
+                        quantity: quantity,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function () {
+                        {% comment %} alert('Item added to cart!'); {% endcomment %}
+                    },
+                    error: function () {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+
+            // Increase quantity
+            $('.plus-quantity').on('click', function () {
+                const productId = $(this).data('product-id');
+                const quantityElement = $('.quantity[data-product-id="' + productId + '"]');
+                let quantity = parseInt(quantityElement.text());
+                quantity++;
+                quantityElement.text(quantity);
+            });
+
+            // Decrease quantity
+            $('.minus-quantity').on('click', function () {
+                const productId = $(this).data('product-id');
+                const quantityElement = $('.quantity[data-product-id="' + productId + '"]');
+                let quantity = parseInt(quantityElement.text());
+                quantityElement.text("0");
+                if (quantity > 1) {
+                    quantity--;
+                    quantityElement.text(quantity);
+                }
+            });
+
+            // Remove from Cart using Ajax
+            $('.remove-from-cart').on('click', function () {
+                const productId = $(this).data('product-id');
+                
+                $.ajax({
+                    url: '{% url 'cart:remove_from_cart_ajax' %}',
+                    type: 'POST',
+                    data: {
+                        product_id: productId,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        {% comment %} alert('Item removed from cart!'); {% endcomment %}
+                    },
+                    error: function () {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

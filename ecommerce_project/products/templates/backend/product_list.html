@@ -1,0 +1,49 @@
+{% extends 'backend/base_form.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Product List</h2>
+    <a href="{% url 'products:product_create' %}" class="btn btn-primary mb-3">Create Product</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Category</th>
+                <th>Tags</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.stock }}</td>
+                <td>{{ product.category }}</td>
+                <td>
+                    {% for tag in product.tags.all %}
+                        {{ tag.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td width="30%">{% if product.image %}
+                    <img src="{{ MEDIA_URL }}{{ product.image.url }}" alt="{{ product.name }} Image"
+                        class="img-thumbnail img-fluid w-25 h-25">
+                    {% else %}
+                    <p>No image available.</p>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'products:product_update' product.pk %}" class="btn btn-sm btn-primary">Update</a>
+                    <form method="post" action="{% url 'products:product_delete' product.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

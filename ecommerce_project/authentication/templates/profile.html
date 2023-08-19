@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Welcome, {{ user.username }}</h2>
+    <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
+
+    <div class="container mt-5">
+        <h2>Your Cart</h2>
+        <div class="row">
+            {% for item in cart_items %}
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-6">
+                            <img src="{{ item.product.image.url }}" class="card-img" alt="{{ item.product.name }}">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.product.name }}</h5>
+                                <p class="card-text">Price: ${{ item.product.price }}</p>
+                                <p class="card-text">Quantity: {{ item.quantity }}</p>
+                                <p class="card-text">Total: ${{ item.product.price|multiply:item.quantity }}</p>
+                                <button class="btn btn-danger remove-from-cart" data-product-id="{{ item.product.id }}">Remove from Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<script>
+    $(document).ready(function () {
+        // Remove from Cart using Ajax
+        $('.remove-from-cart').on('click', function () {
+            const productId = $(this).data('product-id');
+            
+            $.ajax({
+                url: '{% url 'cart:remove_from_cart_ajax' %}',
+                type: 'POST',
+                data: {
+                    product_id: productId,
+                    delete: true,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    // Remove the item card from the DOM
+                    $(this).closest('.card').remove();
+                    alert('Item removed from cart!');
+                }.bind(this),
+                error: function () {
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

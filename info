@@ -1,0 +1,22 @@
+Virtual Env Setup
+    Create Virtual Env
+        - virtualenv venv
+
+    Activate venv
+        - .\venv\Scripts\activate
+
+Install Django
+    - pip install Django
+
+Create Project and App
+    - django-admin startproject ecommerce_project
+    - cd ecommerce_project
+        - python manage.py startapp authentication
+        - python manage.py startapp products
+        - python manage.py startapp cart
+
+Run server
+    - python manage.py runserver
+
+Since uploading Image so Install Pillow
+    - pip install Pillow
