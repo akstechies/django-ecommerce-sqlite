@@ -4,8 +4,6 @@ Ecommerce Using Django
 
 ## Prerequisites
 
-List any prerequisites or dependencies that need to be installed before setting up the project. For example:
-
 - Python (version 3.9.10)
 - Django (version 4.2.4)
 - Virtual environment
