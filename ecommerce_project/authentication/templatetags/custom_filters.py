@@ -8,11 +8,6 @@ def add_class(field, css_class):
     return field.as_widget(attrs={'class': css_class})
 
 @register.filter
-def is_in_cart(product, user):
-    print("Hi")
-    return CartItem.objects.filter(product=product, user=user).exists()
-
-@register.filter
 def get_cart_item(product, user):
     try:
         return CartItem.objects.get(product=product, user=user)

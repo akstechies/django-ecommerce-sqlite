@@ -24,11 +24,6 @@
                             </span>
                             <button class="btn btn-outline-secondary plus-quantity add-to-cart" data-product-id="{{ product.id }}">+</button>
                         </div>
-                        {% comment %} {% if not product|is_in_cart:user %}
-                            <button class="btn btn-success float-right add-to-cart" data-product-id="{{ product.id }}">Add to Cart</button>
-                        {% else %}
-                            <button class="btn btn-danger float-right remove-from-cart" data-product-id="{{ product.id }}">Remove from Cart</button>
-                        {% endif %} {% endcomment %}
                     {% endif %}
                 </div>
             </div>
