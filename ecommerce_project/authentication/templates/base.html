@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Ecommerce Site</title>
-    <!-- Add your CSS links and other meta tags here -->
-    <!-- Add Bootstrap CSS link -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -18,7 +16,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto"> <!-- Align right using ml-auto -->
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
@@ -28,7 +26,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'products:product_list' %}">Admin</a>
                     </li>
-                    <!-- Add more navigation links as needed -->
                     {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'cart:cart_view' %}">Cart</a>
@@ -51,10 +48,9 @@
 
 <main class="container mt-4">
     {% block content %}
-    <!-- This is where the content of the child templates will go -->
     {% endblock %}
 
-     <!-- Display messages -->
+
      {% if messages %}
      <div class="messages">
          {% for message in messages %}
@@ -70,16 +66,12 @@
     <p>&copy; {{ current_year }} Your Ecommerce Site. All rights reserved.</p>
 </footer>
 
-<!-- Add Bootstrap JS and other scripts here -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 {% block footer %}
-<!-- This is where the content of the child templates will go -->
 {% endblock %}
-
-
 
 </body>
 </html>
